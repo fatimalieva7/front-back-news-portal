@@ -19,7 +19,9 @@ def index(request):
 def category_view(request, slug):
     categories = Category.objects.all()
     category = get_object_or_404(Category, slug=slug)
-    news_list = News.objects.filter(category=category).order_by('-published_date')
+    news_list = News.objects.filter(
+    category=category,
+    slug__isnull=False).exclude(slug='').order_by('-published_date')
     return render(request, 'main/category.html', {'category': category, 'news_list': news_list, 'categories': categories})
 
 def news_detail(request, slug):
