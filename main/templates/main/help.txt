@@ -24,13 +24,16 @@
     <link rel="stylesheet" href="{% static 'assets/css/slick.css' %}">
     <link rel="stylesheet" href="{% static 'assets/css/nice-select.css' %}">
     <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
 <body>
+<!-- Preloader Start -->
 
+<!-- Preloader Start -->
+<header>
+    <!-- Header Start -->
     <div class="header-area">
-        <div class="main-header">
+        <div class="main-header ">
             <div class="header-top black-bg d-none d-sm-block">
                 <div class="container">
                     <div class="col-xl-12">
@@ -41,6 +44,7 @@
                                     <li>Class property employ ancho red multi level mansion</li>
                                 </ul>
                             </div>
+
                         </div>
                     </div>
                 </div>
@@ -49,6 +53,27 @@
                 <div class="container">
                     <div class="row d-flex align-items-center">
                         <!-- Logo -->
+                        <div class="col-xl-3 col-lg-3 col-md-3 d-none d-md-block">
+                            <div class="logo">
+                                <a href="index.html"><img src="{% static 'assets/img/logo/logo.png' %}" alt=""></a>
+                            </div>
+                        </div>
+                        <div class="auth-buttons">
+                {% if user.is_authenticated %}
+                    <h2><a style="color: black;"         href="{% url 'main:create_news' %}" class="add-button">Создать</h2>
+                        <!-- <img src="{% static '1004733.png' %}" alt="Add"> -->
+                    </a>
+                    <h2><a style="color: black;"  href="{% url 'user_app:logout' %}" class="logout-button">Выход</h2>
+                        <!-- <img src="{% static 'img/1456124543-612x612.jpg' %}" alt="Logout">  -->
+                    </a>
+                {% else %}
+                    <h2><a style="color: black;"  href="{% url 'user_app:login' %}" class="login-button">Вход</h2>
+                        <!-- <img src="{% static 'Doc/img/1004733.png' %}" alt="Login"  width="30" height="30"> -->
+                    </a>
+                    <a style="color: black;"   href="{% url 'user_app:register' %}" class="register-button">Регситрация</a></h2>
+                {% endif %}
+            </div>
+                
                     </div>
                 </div>
             </div>
@@ -63,49 +88,28 @@
                             <!-- Main-menu -->
                             <div class="main-menu d-none d-md-block">
                                 <nav>
-                                    <ul>
+                                    <ul >
                                         <li><a href="{% url 'main:index' %}">Главная</a></li>
                                         {% for cat in categories %}
                                         <li><a href="{% url 'main:category' cat.slug %}">{{ cat.name }}</a></li>
                                         {% endfor %}
+
                                     </ul>
                                 </nav>
                             </div>
                         </div>
                         <div class="col-xl-4 col-lg-4 col-md-4">
                             <div class="header-right f-right d-none d-lg-block">
-                                <!-- Auth buttons with icons -->
-                                <div class="auth-buttons" style="display: inline-block; margin-right: 15px;">
-                                    <!-- Для незарегистрированных пользователей -->
-                                    <div id="guest-buttons">
-                                        <a href="register.html" class="btn btn-icon" title="Регистрация">
-                                            <i class="fas fa-user-plus"></i>
-                                        </a>
-                                        <a href="login.html" class="btn btn-icon" title="Вход">
-                                            <i class="fas fa-sign-in-alt"></i>
-                                        </a>
-                                    </div>
-    
-                                    <!-- Для зарегистрированных пользователей (изначально скрыто) -->
-                                    <div id="user-buttons" style="display: none;">
-                                        <a href="create.html" class="btn btn-icon" title="Создать">
-                                            <i class="fas fa-plus-circle"></i>
-                                        </a>
-                                        <a href="logout.html" class="btn btn-icon" title="Выход">
-                                            <i class="fas fa-sign-out-alt"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                                
                                 <!-- Heder social -->
                                 <ul class="header-social">
                                     <li><a href="https://www.fb.com/sai4ull"><i class="fab fa-facebook-f"></i></a></li>
                                     <li><a href="#"><i class="fab fa-twitter"></i></a></li>
                                     <li><a href="#"><i class="fab fa-instagram"></i></a></li>
-                                    <li><a href="#"><i class="fab fa-youtube"></i></a></li>
+                                    <li> <a href="#"><i class="fab fa-youtube"></i></a></li>
                                 </ul>
                                 <!-- Search Nav -->
                                 <div class="nav-search search-switch">
+                                    
                                     <i class="fa fa-search"></i>
                                 </div>
                             </div>
@@ -119,51 +123,8 @@
             </div>
         </div>
     </div>
-    
-    <!-- Добавьте этот стиль в ваш CSS -->
-    <style>
-        .btn-icon {
-            color: #333;
-            font-size: 19px;
-            padding: 5px 50px;
-            margin: 0 3px;
-            transition: all 0.3s ease;
-        }
-        .btn-icon:hover {
-            color: #007bff;
-            transform: scale(1.1);
-        }
-        .auth-buttons {
-            display: inline-block;
-            vertical-align: middle;
-        }
-    </style>
-    
-    <!-- Скрипт для переключения между состояниями (для демонстрации) -->
-    <script>
-        // Это для демонстрации - в реальном приложении статус будет определяться бэкендом
-        const isLoggedIn = false; // Поменяйте на true, чтобы увидеть кнопки для зарегистрированного пользователя
-        
-        document.addEventListener('DOMContentLoaded', function() {
-            if(isLoggedIn) {
-                document.getElementById('guest-buttons').style.display = 'none';
-                document.getElementById('user-buttons').style.display = 'block';
-            }
-        });
-        
-        // Функция для переключения состояния (только для демонстрации)
-        function toggleAuth() {
-            isLoggedIn = !isLoggedIn;
-            if(isLoggedIn) {
-                document.getElementById('guest-buttons').style.display = 'none';
-                document.getElementById('user-buttons').style.display = 'block';
-            } else {
-                document.getElementById('guest-buttons').style.display = 'block';
-                document.getElementById('user-buttons').style.display = 'none';
-            }
-        }
-    </script>
-
+    <!-- Header End -->
+</header>
     <main>
         {% block content %}
         {% endblock %}
