@@ -1,0 +1,17 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+    <h2>Результаты поиска по запросу: "{{ query }}"</h2>
+    {% if results %}
+        <ul>
+            {% for news in results %}
+                <li>
+                    <h3><a href="{% url 'main:news_detail' news.slug %}">{{ news.title }}</a></h3>
+                    <p>{{ news.published_date|date:"d.m.Y H:i" }}</p>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Ничего не найдено.</p>
+    {% endif %}
+{% endblock %}

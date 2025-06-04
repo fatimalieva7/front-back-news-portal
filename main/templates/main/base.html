@@ -58,11 +58,22 @@
                                 <a href="index.html"><img src="{% static 'assets/img/logo/logo.png' %}" alt=""></a>
                             </div>
                         </div>
-                        <div class="col-xl-9 col-lg-9 col-md-9">
-                            <div class="header-banner f-right ">
-                                <img src="{% static 'assets/img/gallery/header_card.png' %}" alt="">
-                            </div>
-                        </div>
+                        <div class="auth-buttons">
+                {% if user.is_authenticated %}
+                    <h2><a style="color: black;"         href="{% url 'main:create_news' %}" class="add-button">Создать</h2>
+                        <!-- <img src="{% static '1004733.png' %}" alt="Add"> -->
+                    </a>
+                    <h2><a style="color: black;"  href="{% url 'user_app:logout' %}" class="logout-button">Выход</h2>
+                        <!-- <img src="{% static 'img/1456124543-612x612.jpg' %}" alt="Logout">  -->
+                    </a>
+                {% else %}
+                    <h2><a style="color: black;"  href="{% url 'user_app:login' %}" class="login-button">Вход</h2>
+                        <!-- <img src="{% static 'Doc/img/1004733.png' %}" alt="Login"  width="30" height="30"> -->
+                    </a>
+                    <a style="color: black;"   href="{% url 'user_app:register' %}" class="register-button">Регситрация</a></h2>
+                {% endif %}
+            </div>
+                
                     </div>
                 </div>
             </div>
@@ -98,6 +109,7 @@
                                 </ul>
                                 <!-- Search Nav -->
                                 <div class="nav-search search-switch">
+                                    
                                     <i class="fa fa-search"></i>
                                 </div>
                             </div>

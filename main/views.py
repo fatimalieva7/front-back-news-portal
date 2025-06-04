@@ -10,7 +10,7 @@ from django.shortcuts import redirect
 
 def index(request):
     categories = Category.objects.all()
-    latest_news = News.objects.order_by('-published_date')[:5]
+    latest_news = News.objects.filter(slug__isnull=False).exclude(slug='').order_by('-published_date')[:5]
     return render(request, 'main/index.html', {
         'categories': categories,
         'news_list': latest_news
@@ -26,6 +26,11 @@ def news_detail(request, slug):
     categories = Category.objects.all()
     news = get_object_or_404(News, slug=slug)
     return render(request, 'main/news_detail.html', {'news': news, 'categories': categories})
+    
+    try:
+        news = News.objects.get(slug=slug)
+    except News.DoesNotExist:
+        raise Http404("Новость не найдена")
 
 def search(request):
     query = request.GET.get('q')

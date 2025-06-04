@@ -1,0 +1,12 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block content %}
+ <form method="post" class="confirmation-box">
+        {% csrf_token %}
+        <div class="warning-icon">⚠️</div>
+        <div class="buttons">
+           <button type="submit" class="btn btn-yes">Да, удалить</button>
+            <a href="{% url 'main:index'  %}" class="btn btn-no">Нет, отмена</a>
+        </div>
+    </form>
+{% endblock %}

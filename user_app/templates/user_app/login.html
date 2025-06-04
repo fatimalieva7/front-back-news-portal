@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>login</title>
+</head>
+<body>
+
+<h2>Страница входа</h2>
+
+<form method="post" action="{% url 'user_app:login' %}">
+  {% csrf_token %}
+  {{ user_sign_form.as_p }}
+  <button type="submit">Вход</></button>
+  
+
+
+</form>
+
+</body>
+</html>
