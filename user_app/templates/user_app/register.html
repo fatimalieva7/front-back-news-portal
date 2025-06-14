@@ -1,12 +1,69 @@
 {% extends 'main/base.html' %}
 {% load static %}
 
-
 {% block content %}
-<form method="post">
-    {% csrf_token %}
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card p-4 border-0 shadow-sm" style="border-radius: 10px;">
+                <h2 class="text-center mb-4">Регистрация</h2>
+                <form method="post">
+                    {% csrf_token %}
 
-    {{ form_register_user.as_p }}
-    <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
-</form>
+                    <div class="mb-3">
+                        {{ form_register_user.as_p }}
+                    </div>
+
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary py-2"
+                                style="border-radius: 17px; font-weight: 500;">
+                            Зарегистрироваться
+                        </button>
+                    </div>
+                </form>
+
+                <div class="text-center mt-3">
+                    <small class="text-muted">
+                            <h2>Уже есть аккаунт?  <a href="{% url 'user_app:login' %}"> Войти</a></h2>
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+     .card {
+        background-color: #ffffff;
+    }
+
+    form p {
+        margin-bottom: 1rem;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 0.3rem;
+        font-weight: 500;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+        width: 100%;
+        padding: 0.5rem;
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+    }
+
+    .btn-primary {
+        background-color: #0d6efd;
+        border: none;
+        transition: background-color 0.3s;
+    }
+
+    .btn-primary:hover {
+        background-color: #0b5ed7;
+    }
+</style>
+
 {% endblock %}

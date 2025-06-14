@@ -1,5 +1,6 @@
 from django import forms
 from .models import News, Category
+from django.utils.text import slugify
 
 class NewsForm(forms.ModelForm):
     class Meta:

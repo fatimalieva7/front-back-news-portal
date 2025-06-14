@@ -5,6 +5,7 @@ from .views import NewsDeleteView
 
 
 app_name = 'main'
+
 urlpatterns = [
     path('', views.index, name='index'),
     path('category/<slug:slug>/', views.category_view, name='category'),
