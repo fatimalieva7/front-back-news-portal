@@ -40,6 +40,7 @@ class NewsImage(models.Model):
     title = models.CharField(max_length=255)
     slug = models.SlugField(unique=True, blank=True, verbose_name='URL')
     image = models.ImageField(upload_to='news/', blank=True, null=True)
+    description = models.TextField(max_length=1400, blank=True, null=True, verbose_name='Описание')
     created_at = models.DateTimeField(auto_now_add=True)
 
     def save(self, *args, **kwargs):
@@ -61,6 +62,7 @@ class NewsSport(models.Model):
     slug = models.SlugField(unique=True, blank=True, verbose_name='URL')
     image = models.ImageField(upload_to='news/', blank=True, null=True, verbose_name='Изображение')
     published_date = models.DateTimeField(auto_now_add=True)
+    description = models.TextField(max_length=1400, blank=True, null=True, verbose_name='Описание')
 
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -81,6 +83,7 @@ class NewsCulture(models.Model):
     slug = models.SlugField(unique=True, blank=True, verbose_name='URL')
     image = models.ImageField(upload_to='news/', blank=True, null=True, verbose_name='Изображение')
     published_date = models.DateTimeField(auto_now_add=True)
+    description = models.TextField(max_length=1400, blank=True, null=True, verbose_name='Описание')
 
     def save(self, *args, **kwargs):
         if not self.slug:

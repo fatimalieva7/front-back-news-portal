@@ -57,16 +57,50 @@ def search(request):
     results = News.objects.filter(Q(title__icontains=query) | Q(content__icontains=query)) if query else []
     return render(request, 'main/search.html', {'query': query, 'results': results})
 
+def get_news_model_by_slug(slug):
+    for model in [News, NewsImage, NewsSport, NewsCulture]:
+        try:
+            return model.objects.get(slug=slug)
+        except model.DoesNotExist:
+            continue
+    return None
+
+
 def create_news(request):
     if request.method == 'POST':
         form = NewsForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            return redirect('main:index') 
+            return redirect('main:index')
     else:
         form = NewsForm()
     return render(request, 'main/create_news.html', {'form': form})
 
+
+def update_news(request, slug):
+    news_item = get_news_model_by_slug(slug)
+    if not news_item:
+        raise Http404("Новость не найдена")
+
+    # определяем форму по типу объекта
+    if isinstance(news_item, NewsImage):
+        form_class = NewsImageForm
+    elif isinstance(news_item, NewsSport):
+        form_class = NewsSportForm
+    elif isinstance(news_item, NewsCulture):
+        form_class = NewsCultureForm
+    else:
+        form_class = NewsForm
+
+    if request.method == 'POST':
+        form = form_class(request.POST, request.FILES, instance=news_item)
+        if form.is_valid():
+            form.save()
+            return redirect('main:index')
+    else:
+        form = form_class(instance=news_item)
+
+    return render(request, 'main/create_news.html', {'form': form})
 
     
 class NewsUpdateView(UpdateView):
@@ -82,7 +116,11 @@ class NewsDeleteView(DeleteView):
     success_url = reverse_lazy('main:index')
 
 
-def news_delete_view(request, pk):
-    new = News.objects.get(pk=pk)
-    new.delete()
+def delete_news(request, slug):
+    news_item = get_news_model_by_slug(slug)
+    if not news_item:
+        raise Http404("Новость не найдена")
+
+    news_item.delete()
     return redirect('main:index')
+

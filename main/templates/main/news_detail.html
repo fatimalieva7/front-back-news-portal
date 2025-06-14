@@ -19,7 +19,7 @@
                                 <h3>{{ news.title }}</h3>
                             </div>
                             <div class="about-prea">
-                               12345678
+                               {{ news.description|linebreaks }}
                                 <p class="about-pera1 mb-25">
                                      {{ news.content|linebreaks }}
                                     </p>
@@ -35,12 +35,12 @@
             <article class="single-news">
                 <div class="row">
                     <div class="col-sm-6 mb-2">
-                        <a href="{% url 'main:delete_news' news.pk %}" class="btn btn-danger w-100" style="padding: 12px; font-weight: bold;">
+                        <a href="{% url 'main:delete_news' news.slug %}" class="btn btn-danger w-100" style="padding: 12px; font-weight: bold;">
                             Удалить новость
                         </a>
                     </div>
                     <div class="col-sm-6 mb-2">
-                        <a href="{% url 'main:update_news' news.pk %}" class="btn btn-success w-100" style="padding: 12px; font-weight: bold;">
+                        <a href="{% url 'main:update_news'  news.slug%}" class="btn btn-success w-100" style="padding: 12px; font-weight: bold;">
                             Обновить новость
                         </a>
                     </div>
