@@ -1,5 +1,5 @@
 from django import forms
-from .models import News, Category
+from .models import News,  NewsImage, NewsSport, NewsCulture
 from django.utils.text import slugify
 
 class NewsForm(forms.ModelForm):
@@ -19,3 +19,17 @@ class NewsForm(forms.ModelForm):
         if commit:
             instance.save()
         return instance
+class NewsImageForm(forms.ModelForm):
+    class Meta:
+        model = NewsImage
+        fields = '__all__'
+
+class NewsSportForm(forms.ModelForm):
+    class Meta:
+        model = NewsSport
+        fields = '__all__'
+
+class NewsCultureForm(forms.ModelForm):
+    class Meta:
+        model = NewsCulture
+        fields = '__all__'

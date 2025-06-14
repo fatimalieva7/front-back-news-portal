@@ -1,19 +1,26 @@
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import  UpdateView, DeleteView
 from django.urls import reverse_lazy
-from .models import News, Category
-from .forms import NewsForm
+from .models import News, Category, NewsImage, NewsSport, NewsCulture
+from .forms import NewsForm, NewsSportForm, NewsCultureForm, NewsImageForm
 from django.db.models import Q
 from django.shortcuts import redirect
+from django.http import Http404
 
 
 
 def index(request):
+    newssport = NewsSport.objects.filter(slug__isnull=False).exclude(slug='').order_by('-published_date').first()
+    newsculture = NewsCulture.objects.filter(slug__isnull=False).exclude(slug='').order_by('-published_date').first()
+    newsimage = NewsImage.objects.filter(slug__isnull=False).exclude(slug='').order_by('-created_at')[:3]
     categories = Category.objects.all()
-    latest_news = News.objects.filter(slug__isnull=False).exclude(slug='').order_by('-published_date')[:5]
+    news_list = News.objects.filter(slug__isnull=False).exclude(slug='').order_by('-published_date')[:5]
     return render(request, 'main/index.html', {
         'categories': categories,
-        'news_list': latest_news
+        'news_list': news_list,
+        'newsimage': newsimage,
+        'newssport': newssport,
+        'newsculture': newsculture
     })
 
 def category_view(request, slug):
@@ -26,13 +33,24 @@ def category_view(request, slug):
 
 def news_detail(request, slug):
     categories = Category.objects.all()
-    news = get_object_or_404(News, slug=slug)
-    return render(request, 'main/news_detail.html', {'news': news, 'categories': categories})
-    
-    try:
-        news = News.objects.get(slug=slug)
-    except News.DoesNotExist:
+    news_item = None
+
+    models_to_search = [News, NewsImage, NewsCulture, NewsSport]
+    for model in models_to_search:
+        try:
+            news_item = model.objects.get(slug=slug)
+            break
+        except model.DoesNotExist:
+            continue
+
+    if not news_item:
         raise Http404("Новость не найдена")
+
+    context = {
+        'news': news_item,
+        'categories': categories,
+    }
+    return render(request, 'main/news_detail.html', context)
 
 def search(request):
     query = request.GET.get('q')
@@ -68,7 +86,3 @@ def news_delete_view(request, pk):
     new = News.objects.get(pk=pk)
     new.delete()
     return redirect('main:index')
-
-
-
-
