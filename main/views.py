@@ -13,8 +13,9 @@ def index(request):
     newssport = NewsSport.objects.filter(slug__isnull=False).exclude(slug='').order_by('-published_date').first()
     newsculture = NewsCulture.objects.filter(slug__isnull=False).exclude(slug='').order_by('-published_date').first()
     newsimage = NewsImage.objects.filter(slug__isnull=False).exclude(slug='').order_by('-created_at')[:3]
+
     categories = Category.objects.all()
-    news_list = News.objects.filter(slug__isnull=False).exclude(slug='').order_by('-published_date')[:5]
+    news_list = News.objects.filter(slug__isnull=False).exclude(slug='').order_by('-published_date')[:7]
     return render(request, 'main/index.html', {
         'categories': categories,
         'news_list': news_list,
