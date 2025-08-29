@@ -1,0 +1,6 @@
+
+staticfiles/
+media/
+
+
+db.sqlite3

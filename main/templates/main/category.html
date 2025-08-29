@@ -56,19 +56,5 @@
                                                
                                     </div>
                                         
-    <!-- <main>
-       {% for news in news_list %}
-            <li>
-            <h3><a href="{% url 'main:news_detail' news.slug %}">{{ news.title }}</a></h3>
-            {% if news.image %}
-                    <img src="{{ news.image.url }}" alt="{{ news.title }}" width="200">
-                {% endif %}
-                <p>{{ news.published_date|date:"d.m.Y H:i" }}</p>
-                <p><a href="{% url 'main:news_detail' news.slug %}">Подробнее</a></p>
-        </li>
-        {% empty %}
-        <li>Новостей пока нет.</li>
-        {% endfor %}
-    </ul>
-    </main> -->
+
 {% endblock %}
